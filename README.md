@@ -17,7 +17,7 @@ cd mock-exporter
 Start the services
 
 ```sh
-docker-compose up --build
+docker-compose up --build or docker compose up --build (depending on the version of docker compose installed)
 ```
 
 This will start prometheus on localhost:9090 and mock-exporter on localhost:9000/metrics
