@@ -55,3 +55,45 @@ Stopping the container
 ```sh
 docker-compose down
 ```
+
+## Consuming the prometheus metrics
+
+A sample python script looks like
+
+```
+import requests
+
+PROMETHEUS_API = 'http://localhost:9090/api/v1/query'
+
+response = requests.get(PROMETHEUS_API, params={'query': 'cpu_usage'})
+
+print(response.json())
+```
+
+where the printed response will be
+
+```
+{
+  "status": "success",
+  "data": {
+    "resultType": "vector",
+    "result": [
+      {
+        "metric": {
+          "__name__": "cpu_usage",
+          "instance": "mock-exporter:9000",
+          "job": "mock-metrics"
+        },
+        "value": [1743088574.689, "33.43545543672559"]
+      }
+    ]
+  }
+}
+```
+
+The value has 2 items
+```
+"value": [1743088574.689, "33.43545543672559"]
+```
+
+one is the UNIX timestamp and the other is the value at that point in time.
